@@ -18,7 +18,7 @@ public final class EntityManagerUtil {
 
     private static final Supplier<EntityManager> entityManagerSupplier = emf::createEntityManager;
 
-    private static EntityManager getEntityManager() {
+    public static EntityManager getEntityManager() {
         return entityManagerSupplier.get();
     }
 

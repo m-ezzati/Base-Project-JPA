@@ -4,6 +4,7 @@ import base.model.BaseEntity;
 import base.repository.BaseRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import util.EntityManagerUtil;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,19 +12,15 @@ import java.util.Optional;
 
 public class BaseRepositoryImpl <T extends BaseEntity<ID>, ID extends Serializable> implements BaseRepository <T,ID> {
 
-//    protected EntityManagerFactory emf =
-//            Persistence.createEntityManagerFactory("postgresql-pu");
-    protected final EntityManagerFactory emf;
     protected final Class<T> entityClass;
 
-    protected BaseRepositoryImpl(EntityManagerFactory emf, Class<T> entityClass) {
-        this.emf = emf;
+    protected BaseRepositoryImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     @Override
     public void add(T entity) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
         try{
             em.getTransaction().begin();
             em.persist(entity);
@@ -37,7 +34,7 @@ public class BaseRepositoryImpl <T extends BaseEntity<ID>, ID extends Serializab
 
     @Override
     public void deleteById(ID id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             T entity = em.find(entityClass, id);
@@ -52,7 +49,7 @@ public class BaseRepositoryImpl <T extends BaseEntity<ID>, ID extends Serializab
 
     @Override
     public List<T> findAll() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
         List<T> result;
         try{
              result = em.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
@@ -65,7 +62,7 @@ public class BaseRepositoryImpl <T extends BaseEntity<ID>, ID extends Serializab
 
     @Override
     public Optional<T> findById(ID id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             T entity = em.find(entityClass, id);
