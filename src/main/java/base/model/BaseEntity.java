@@ -2,11 +2,12 @@ package base.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
 @MappedSuperclass
-public class BaseEntity<ID> {
+public class BaseEntity<ID extends Serializable> {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)

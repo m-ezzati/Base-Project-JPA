@@ -1,12 +1,14 @@
 package base.service.impl;
 
+import base.model.BaseEntity;
 import base.repository.BaseRepository;
 import base.service.BaseService;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseServiceImpl<T, ID> implements BaseService<T, ID> {
+public class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Serializable> implements BaseService<T, ID> {
     protected final BaseRepository<T, ID> repository;
 
     public BaseServiceImpl(BaseRepository<T, ID> repository) {
