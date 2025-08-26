@@ -22,7 +22,7 @@ public class BaseServiceImpl<T extends BaseEntity<ID>, ID extends Serializable> 
     }
 
     @Override
-    public List<T> displayAllOrder() {
+    public List<T> displayAll() {
         return repository.findAll();
     }
 
